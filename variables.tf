@@ -31,6 +31,36 @@ variable "tenant_id" {
   type        = string
 }
 
+variable "vnet_name" {
+  type        = string
+  default     = "vnet"
+  description = "The Virtual Network name."
+}
+
+variable "vnet_range" {
+  type        = string
+  default     = "10.0.0.0/24"
+  description = "The Virtual Network range."
+}
+
+variable "subnet_name" {
+  type        = string
+  default     = "subnet-vm"
+  description = "The Virtual Network Subnet for Virtual Machine name."
+}
+
+variable "subnet_range" {
+  type        = string
+  default     = "10.0.0.0/26"
+  description = "The Virtual Network Subnet for Virtual Machine range."
+}
+
+variable "vm_nic_name" {
+  type        = string
+  default     = "vm-nic"
+  description = "The Virtual Machine Network interface name."
+}
+
 variable "vm_name" {
   type        = string
   default     = "app-vm"
