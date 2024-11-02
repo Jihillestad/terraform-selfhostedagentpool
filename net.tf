@@ -1,7 +1,7 @@
 resource "azurerm_network_security_group" "app_network_nsg" {
   name                = "${var.subnet_name}-nsg"
-  location            = azurerm_resource_group.app_grp.location
-  resource_group_name = azurerm_resource_group.app_grp.name
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
 
   security_rule {
     name                       = "allowRDP"
@@ -28,7 +28,7 @@ resource "azurerm_virtual_network" "app_network" {
 resource "azurerm_subnet" "SubnetA" {
   name                 = var.subnet_name
   resource_group_name  = azurerm_resource_group.rg.name
-  virtual_network_name = azurerm_virtual_network.rg.name
+  virtual_network_name = azurerm_virtual_network.app_network.name
   address_prefixes     = [var.subnet_range]
 }
 

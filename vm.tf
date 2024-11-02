@@ -29,4 +29,15 @@ resource "azurerm_windows_virtual_machine" "vm" {
     sku       = "2022-Datacenter"
     version   = "latest"
   }
+  identity {
+    type = "SystemAssigned"
+  }
+}
+
+resource "azurerm_public_ip" "app_public_ip" {
+  name                = "${var.vm_name}-pip"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
+  allocation_method   = "Static"
+  sku                 = "Standard"
 }
