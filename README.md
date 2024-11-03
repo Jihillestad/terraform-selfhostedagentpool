@@ -96,7 +96,7 @@ terraform apply main.tfplan
 6. Verify the deployment in the Azure portal.
 
 7. Verify the deployment in the Azure DevOps organization. You should see the new agent pool.
-   ![Agent Pool](images/agentpool.png)
+   ![Agent Pool](./agentexample.png)
 
 8. To keep costs down, remember to destroy the resources when you are done.
 
