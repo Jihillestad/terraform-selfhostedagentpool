@@ -84,3 +84,24 @@ variable "admin_password" {
   description = "Admin password for the Virtual Machine."
   sensitive   = true
 }
+
+variable "agent-name" {
+  type        = string
+  default     = "self-hosted-agent"
+  description = "The name of the agent."
+}
+
+variable "url" {
+  type        = string
+  description = "The URL of the Azure DevOps."
+}
+
+variable "pat" {
+  type        = string
+  description = "The Personal Access Token of the Azure DevOps."
+}
+
+variable "pool" {
+  type        = string
+  description = "The Pool name of the Azure DevOps."
+}
