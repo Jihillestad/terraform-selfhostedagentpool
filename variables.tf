@@ -105,3 +105,9 @@ variable "pool" {
   type        = string
   description = "The Pool name of the Azure DevOps."
 }
+
+variable "agent_version" {
+  description = "Agent version (default: latest)"
+  type        = string
+  default     = ""
+}
