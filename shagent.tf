@@ -1,17 +1,23 @@
-# Custom script extension to install the DevOps agent
-resource "azurerm_virtual_machine_extension" "azuredevopsvmex" {
-  name                 = "AzureDevopsAgent"
+# PowerShell Script to Install Azure DevOps Agent
+data "local_file" "windows_agent_script" {
+  filename = "windows-agent-install.ps1"
+}
+
+resource "azurerm_virtual_machine_extension" "install_devops_agent" {
+  name                 = "install-devops-agent"
   virtual_machine_id   = azurerm_windows_virtual_machine.vm.id
   publisher            = "Microsoft.Compute"
   type                 = "CustomScriptExtension"
-  type_handler_version = "1.9"
+  type_handler_version = "1.10"
+  depends_on           = [azurerm_storage_blob.windows-agent-install]
+
+  # Pass the necessary parameters to the PowerShell script
 
   settings = <<SETTINGS
   {
-  "fileUris": ["https://maxmelcherdevops.blob.core.windows.net/terraform/devops_win.ps1?sp=r&st=2019-03-13T11:13:24Z&se=2022-03-13T19:13:24Z&spr=https&sv=2018-03-28&sig=%2BlOz%2Fza3vlunvhARYgG5GLlrhzRADE1LrLUWu9cIlUc%3D&sr=b"],
-  "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File ./devops_win.ps1 -URL ${var.url} -PAT ${var.pat} -POOL ${var.pool} -AGENT ${var.agent-name}",
-  "timestamp" : "12"
+      "fileUris": ["https://${azurerm_storage_account.eshoponweb.name}.blob.core.windows.net/data/windows-agent-install.ps1"],
+      "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File ./windows-agent-install.ps1 -URL ${var.url} -PAT ${var.pat} -POOL ${var.pool} -AGENT ${var.agent-name}",
+      "timestamp" : "12"
   }
-SETTINGS
-
+  SETTINGS
 }
