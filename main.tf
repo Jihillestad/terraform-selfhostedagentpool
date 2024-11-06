@@ -5,6 +5,12 @@ terraform {
       version = "4.8.0"
     }
   }
+  backend "azurerm" {
+    resource_group_name  = "tfstate_rg"
+    storage_account_name = "tfstate30106"
+    container_name       = "tfstate"
+    key                  = "terraform-shagent.tfstate"
+  }
 }
 
 provider "azurerm" {
