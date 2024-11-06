@@ -75,30 +75,49 @@ pat             = ""
 pool            = "eShopOnWebSelfPool"
 ```
 
-3. Initialize the Terraform environment.
+3. If you want to use local state, you can remove the **backend block** from the
+   **main.tf** file. If you want to use remote state, you can use the Azure
+   Storage Account backend. You need to set the **storage_account_name** and
+   **container_name** in the **backend block**. I recommend using **Azure CLI**
+   to create the **Storage Account** and **Container**, as wel as the storage
+   access key in a **keyvault**. Then add the key to the environment variable
+   AZURE_STORAGE_KEY which Terraform will use to authenticate.
+
+```hcl
+terraform {
+  backend "azurerm" {
+    resource_group_name  = "rg-eshoponweb-agentpool"
+    storage_account_name = ""
+    container_name       = ""
+    key                  = "terraform-shagent.tfstate"
+  }
+}
+```
+
+4. Initialize the Terraform environment.
 
 ```bash
 terraform init
 ```
 
-4. Plan the Terraform deployment.
+5. Plan the Terraform deployment.
 
 ```bash
 terraform plan -out=main.tfplan
 ```
 
-5. Apply the Terraform deployment.
+6. Apply the Terraform deployment.
 
 ```bash
 terraform apply main.tfplan
 ```
 
-6. Verify the deployment in the Azure portal.
+7. Verify the deployment in the Azure portal.
 
-7. Verify the deployment in the Azure DevOps organization. You should see the new agent pool.
+8. Verify the deployment in the Azure DevOps organization. You should see the new agent pool.
    ![Agent Pool](./agentexample.png)
 
-8. To keep costs down, remember to destroy the resources when you are done.
+9. To keep costs down, remember to destroy the resources when you are done.
 
 ```bash
 terraform destroy
